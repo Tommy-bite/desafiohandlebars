@@ -32,7 +32,16 @@ app.get('/services/:name' , (req, res) => {
 
     const nameURL = req.params.name;
     const service = services.find(item => item.url === `/services/${nameURL}`)
-    res.render('service', {service});
+
+    if(!service){
+        return res.render('404', {title : "No se encuentra el servicio"});
+    }
+
+    return res.render('service', {service});
+})
+
+app.get('*', (req, res) =>  {
+    res.render('404', {title : "La pagina no existe"});
 })
 
 app.listen(PORT, () => {
